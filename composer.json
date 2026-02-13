@@ -1,0 +1,51 @@
+{
+    "name": "conduit-ui/pr-cli",
+    "description": "Pull Request CLI for the Conduit agent ecosystem",
+    "keywords": ["cli", "github", "pull-requests", "conduit-ui"],
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jordan Partridge",
+            "email": "jordan@partridge.rocks"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "conduit-ui/pr": "^1.0",
+        "laravel-zero/framework": "^12.0.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.25.1",
+        "mockery/mockery": "^1.6.12",
+        "pestphp/pest": "^3.8.4|^4.1.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest --parallel",
+        "test-coverage": "vendor/bin/pest --parallel --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "bin": ["pr"]
+}
