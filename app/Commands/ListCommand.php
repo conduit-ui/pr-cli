@@ -38,6 +38,7 @@ class ListCommand extends Command
 
         if (empty($prs)) {
             $this->line('  No pull requests found.');
+
             return self::SUCCESS;
         }
 
@@ -48,7 +49,7 @@ class ListCommand extends Command
         }
 
         $this->newLine();
-        $this->line("  Showing " . count($prs) . " PR(s)");
+        $this->line('  Showing '.count($prs).' PR(s)');
 
         return self::SUCCESS;
     }

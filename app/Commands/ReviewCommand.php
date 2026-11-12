@@ -28,7 +28,8 @@ class ReviewCommand extends Command
         try {
             $pr = $service->find($repo, $number);
         } catch (\Throwable $e) {
-            $this->error("Failed to fetch PR #{$number}: " . $e->getMessage());
+            $this->error("Failed to fetch PR #{$number}: ".$e->getMessage());
+
             return self::FAILURE;
         }
 
@@ -41,26 +42,29 @@ class ReviewCommand extends Command
             $event = 'APPROVE';
         } elseif ($this->option('request-changes')) {
             $event = 'REQUEST_CHANGES';
-            if (!$body) {
+            if (! $body) {
                 $body = $this->ask('Review body (required for requesting changes)');
-                if (!$body) {
+                if (! $body) {
                     $this->error('A comment body is required when requesting changes.');
+
                     return self::FAILURE;
                 }
             }
         } else {
             $event = 'COMMENT';
-            if (!$body) {
+            if (! $body) {
                 $body = $this->ask('Review comment');
-                if (!$body) {
+                if (! $body) {
                     $this->error('A comment body is required for a comment review.');
+
                     return self::FAILURE;
                 }
             }
         }
 
-        if (!$this->confirm("Submit {$event} review on PR #{$number}?")) {
+        if (! $this->confirm("Submit {$event} review on PR #{$number}?")) {
             $this->line('  Review cancelled.');
+
             return self::SUCCESS;
         }
 
@@ -68,7 +72,8 @@ class ReviewCommand extends Command
             $pr->submitReview($event, $body);
             $this->info("  Review ({$event}) submitted on PR #{$number}.");
         } catch (\Throwable $e) {
-            $this->error("  Failed to submit review: " . $e->getMessage());
+            $this->error('  Failed to submit review: '.$e->getMessage());
+
             return self::FAILURE;
         }
 

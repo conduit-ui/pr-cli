@@ -32,7 +32,8 @@ class MergeCommand extends Command
         try {
             $pr = $service->find($repo, $number);
         } catch (\Throwable $e) {
-            $this->error("Failed to fetch PR #{$number}: " . $e->getMessage());
+            $this->error("Failed to fetch PR #{$number}: ".$e->getMessage());
+
             return self::FAILURE;
         }
 
@@ -49,12 +50,13 @@ class MergeCommand extends Command
         $renderer->renderWorkflow($repo, $workflow);
 
         // 3. Run guards (unless --force)
-        if (!$this->option('force')) {
+        if (! $this->option('force')) {
             $guards = $this->runGuards($pr, $workflow);
             $renderer->renderGuards($guards);
 
-            if (!$this->allGuardsPassed($guards)) {
+            if (! $this->allGuardsPassed($guards)) {
                 $this->error('Merge blocked by workflow guards. Use --force to override.');
+
                 return self::FAILURE;
             }
         } else {
@@ -65,12 +67,14 @@ class MergeCommand extends Command
         // 4. Dry run check
         if ($this->option('dry-run')) {
             $this->info("  [DRY RUN] Would merge PR #{$number} using strategy: {$strategy}");
+
             return self::SUCCESS;
         }
 
         // 5. Confirm with user
-        if (!$this->confirm("Merge PR #{$number} using {$strategy} strategy?")) {
+        if (! $this->confirm("Merge PR #{$number} using {$strategy} strategy?")) {
             $this->line('  Merge cancelled.');
+
             return self::SUCCESS;
         }
 
@@ -81,11 +85,13 @@ class MergeCommand extends Command
             if ($merged) {
                 $this->info("  PR #{$number} merged successfully using {$strategy} strategy.");
             } else {
-                $this->error("  Merge returned false. The PR may not be mergeable.");
+                $this->error('  Merge returned false. The PR may not be mergeable.');
+
                 return self::FAILURE;
             }
         } catch (\Throwable $e) {
-            $this->error("  Merge failed: " . $e->getMessage());
+            $this->error('  Merge failed: '.$e->getMessage());
+
             return self::FAILURE;
         }
 

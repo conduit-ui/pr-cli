@@ -36,12 +36,12 @@ trait ResolvesRepository
 
         // SSH format: git@github.com:owner/repo.git
         if (preg_match('#git@github\.com:(.+)/(.+?)(?:\.git)?$#', $url, $matches)) {
-            return $matches[1] . '/' . $matches[2];
+            return $matches[1].'/'.$matches[2];
         }
 
         // HTTPS format: https://github.com/owner/repo.git
         if (preg_match('#https?://github\.com/(.+)/(.+?)(?:\.git)?$#', $url, $matches)) {
-            return $matches[1] . '/' . $matches[2];
+            return $matches[1].'/'.$matches[2];
         }
 
         return null;

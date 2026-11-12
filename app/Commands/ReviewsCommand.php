@@ -15,7 +15,7 @@ class ReviewsCommand extends Command
 
     public function handle(PrServiceInterface $service): int
     {
-        $user = $this->option('user') ?: config('workflows.github_user', 'jordanpartridge');
+        $user = $this->option('user') ?: config('workflows.github_user', 'shadetheory');
         $since = $this->resolveSince($this->option('since'));
 
         /** @var array<int, string> $repos */
@@ -23,6 +23,7 @@ class ReviewsCommand extends Command
 
         if (empty($repos)) {
             $this->warn('No monitored repos configured in config/workflows.php');
+
             return self::SUCCESS;
         }
 
@@ -65,15 +66,15 @@ class ReviewsCommand extends Command
 
                         $this->line(
                             "  <fg=cyan>{$repo}</> <info>#{$pr->data->number}</info> "
-                            . "<comment>{$review->user->login}</comment> {$stateLabel} "
-                            . "<fg=gray>{$review->submittedAt->format('Y-m-d H:i')}</>"
+                            ."<comment>{$review->user->login}</comment> {$stateLabel} "
+                            ."<fg=gray>{$review->submittedAt->format('Y-m-d H:i')}</>"
                         );
 
                         $totalReviews++;
                     }
                 }
             } catch (\Throwable $e) {
-                $this->warn("  Could not fetch from {$repo}: " . $e->getMessage());
+                $this->warn("  Could not fetch from {$repo}: ".$e->getMessage());
             }
         }
 

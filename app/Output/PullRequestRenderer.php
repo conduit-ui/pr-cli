@@ -35,24 +35,24 @@ class PullRequestRenderer
             $this->output->writeln("  Changes: <info>+{$additions}</info> <fg=red>-{$deletions}</> across {$files} file(s)");
         }
 
-        if (!empty($data->labels)) {
+        if (! empty($data->labels)) {
             $labels = implode(', ', array_map(fn ($l) => $l->name, $data->labels));
             $this->output->writeln("  Labels: {$labels}");
         }
 
-        if (!empty($data->assignees)) {
+        if (! empty($data->assignees)) {
             $assignees = implode(', ', array_map(fn ($a) => $a->login, $data->assignees));
             $this->output->writeln("  Assignees: {$assignees}");
         }
 
-        if (!empty($data->requestedReviewers)) {
+        if (! empty($data->requestedReviewers)) {
             $reviewers = implode(', ', array_map(fn ($r) => $r->login, $data->requestedReviewers));
             $this->output->writeln("  Requested reviewers: {$reviewers}");
         }
 
         if ($data->body) {
             $this->output->writeln('');
-            $this->output->writeln('  ' . str_replace("\n", "\n  ", trim($data->body)));
+            $this->output->writeln('  '.str_replace("\n", "\n  ", trim($data->body)));
         }
 
         $this->output->writeln('');
@@ -69,8 +69,8 @@ class PullRequestRenderer
 
         $this->output->writeln(
             "  {$prefix}<info>#{$data->number}</info> {$stateLabel} {$data->title} "
-            . "<comment>({$data->user->login})</comment> "
-            . "<fg=gray>{$data->updatedAt->format('Y-m-d')}</>"
+            ."<comment>({$data->user->login})</comment> "
+            ."<fg=gray>{$data->updatedAt->format('Y-m-d')}</>"
         );
     }
 
@@ -103,7 +103,7 @@ class PullRequestRenderer
         $this->output->writeln("  <info>Workflow for {$repo}:</info>");
         $this->output->writeln("    Strategy: <comment>{$workflow['merge_strategy']}</comment>");
         $this->output->writeln("    Base branch: <comment>{$workflow['base_branch']}</comment>");
-        $this->output->writeln("    Delete branch: <comment>" . ($workflow['delete_branch'] ? 'yes' : 'no') . "</comment>");
+        $this->output->writeln('    Delete branch: <comment>'.($workflow['delete_branch'] ? 'yes' : 'no').'</comment>');
         $this->output->writeln("    Required reviews: <comment>{$workflow['required_reviews']}</comment>");
     }
 

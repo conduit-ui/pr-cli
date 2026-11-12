@@ -16,7 +16,7 @@ class MyCommand extends Command
 
     public function handle(PrServiceInterface $service): int
     {
-        $user = $this->option('user') ?: config('workflows.github_user', 'jordanpartridge');
+        $user = $this->option('user') ?: config('workflows.github_user', 'shadetheory');
         $state = $this->option('state');
 
         /** @var array<int, string> $repos */
@@ -24,6 +24,7 @@ class MyCommand extends Command
 
         if (empty($repos)) {
             $this->warn('No monitored repos configured in config/workflows.php');
+
             return self::SUCCESS;
         }
 
@@ -46,7 +47,7 @@ class MyCommand extends Command
                     $total++;
                 }
             } catch (\Throwable $e) {
-                $this->warn("  Could not fetch from {$repo}: " . $e->getMessage());
+                $this->warn("  Could not fetch from {$repo}: ".$e->getMessage());
             }
         }
 

@@ -2,7 +2,6 @@
 
 namespace App\Concerns;
 
-use App\Config\WorkflowResolver;
 use ConduitUI\Pr\DataTransferObjects\CheckRun;
 use ConduitUI\Pr\DataTransferObjects\Review;
 use ConduitUI\Pr\PullRequest;
@@ -23,12 +22,12 @@ trait EnforcesWorkflow
         $guards[] = [
             'passed' => $pr->data->isOpen(),
             'label' => 'PR is open',
-            'detail' => $pr->data->isOpen() ? 'State: open' : 'State: ' . $pr->data->state,
+            'detail' => $pr->data->isOpen() ? 'State: open' : 'State: '.$pr->data->state,
         ];
 
         // Guard 2: Not a draft
         $guards[] = [
-            'passed' => !$pr->data->isDraft(),
+            'passed' => ! $pr->data->isDraft(),
             'label' => 'Not a draft',
             'detail' => $pr->data->isDraft() ? 'PR is still a draft' : 'Ready for review',
         ];
@@ -67,7 +66,7 @@ trait EnforcesWorkflow
             $latestByUser = [];
             foreach ($reviews as $review) {
                 $login = $review->user->login;
-                if (!isset($latestByUser[$login]) || $review->submittedAt > $latestByUser[$login]->submittedAt) {
+                if (! isset($latestByUser[$login]) || $review->submittedAt > $latestByUser[$login]->submittedAt) {
                     $latestByUser[$login] = $review;
                 }
             }
@@ -96,20 +95,22 @@ trait EnforcesWorkflow
             }
 
             $failed = array_filter($checks, fn (CheckRun $check): bool => $check->isFailed());
-            $pending = array_filter($checks, fn (CheckRun $check): bool => !$check->isCompleted());
+            $pending = array_filter($checks, fn (CheckRun $check): bool => ! $check->isCompleted());
             $passed = array_filter($checks, fn (CheckRun $check): bool => $check->isSuccessful());
 
             if (count($failed) > 0) {
                 $names = implode(', ', array_map(fn (CheckRun $c) => $c->name, $failed));
+
                 return ['passed' => false, 'detail' => "Failed: {$names}"];
             }
 
             if (count($pending) > 0) {
                 $names = implode(', ', array_map(fn (CheckRun $c) => $c->name, $pending));
+
                 return ['passed' => false, 'detail' => "Pending: {$names}"];
             }
 
-            return ['passed' => true, 'detail' => count($passed) . ' check(s) passed'];
+            return ['passed' => true, 'detail' => count($passed).' check(s) passed'];
         } catch (\Throwable) {
             return ['passed' => true, 'detail' => 'Could not fetch checks'];
         }
@@ -122,6 +123,6 @@ trait EnforcesWorkflow
      */
     protected function allGuardsPassed(array $guards): bool
     {
-        return count(array_filter($guards, fn (array $g): bool => !$g['passed'])) === 0;
+        return count(array_filter($guards, fn (array $g): bool => ! $g['passed'])) === 0;
     }
 }
