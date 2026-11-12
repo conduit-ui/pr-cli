@@ -31,6 +31,7 @@ class MergedCommand extends Command
 
         if (empty($repos)) {
             $this->warn('No repos to scan. Use --repo or configure monitored_repos.');
+
             return self::SUCCESS;
         }
 
@@ -48,7 +49,7 @@ class MergedCommand extends Command
                     ->get();
 
                 foreach ($prs as $pr) {
-                    if (!$pr->data->isMerged()) {
+                    if (! $pr->data->isMerged()) {
                         continue;
                     }
 
@@ -60,7 +61,7 @@ class MergedCommand extends Command
                     $total++;
                 }
             } catch (\Throwable $e) {
-                $this->warn("  Could not fetch from {$repo}: " . $e->getMessage());
+                $this->warn("  Could not fetch from {$repo}: ".$e->getMessage());
             }
         }
 

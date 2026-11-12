@@ -25,7 +25,8 @@ class ShowCommand extends Command
         try {
             $pr = $service->find($repo, $number);
         } catch (\Throwable $e) {
-            $this->error("Failed to fetch PR #{$number}: " . $e->getMessage());
+            $this->error("Failed to fetch PR #{$number}: ".$e->getMessage());
+
             return self::FAILURE;
         }
 

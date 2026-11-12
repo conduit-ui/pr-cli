@@ -51,6 +51,6 @@ class WorkflowResolver
             $pattern
         );
 
-        return (bool) preg_match('#^' . $regex . '$#', $repository);
+        return (bool) preg_match('#^'.$regex.'$#', $repository);
     }
 }

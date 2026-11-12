@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use ConduitUi\GitHubConnector\Connector;
 use ConduitUI\Pr\Contracts\PrServiceInterface;
-use ConduitUI\Pr\PullRequests;
 use ConduitUI\Pr\Services\GitHubPrService;
 use Illuminate\Support\ServiceProvider;
 

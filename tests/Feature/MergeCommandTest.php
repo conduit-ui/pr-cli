@@ -1,6 +1,5 @@
 <?php
 
-use App\Config\WorkflowResolver;
 use ConduitUI\Pr\Contracts\PrServiceInterface;
 use ConduitUI\Pr\DataTransferObjects\Base;
 use ConduitUI\Pr\DataTransferObjects\Head;
