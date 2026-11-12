@@ -15,7 +15,7 @@ class ReviewsCommand extends Command
 
     public function handle(PrServiceInterface $service): int
     {
-        $user = $this->option('user') ?: config('workflows.github_user', 'jordanpartridge');
+        $user = $this->option('user') ?: config('workflows.github_user', 'shadetheory');
         $since = $this->resolveSince($this->option('since'));
 
         /** @var array<int, string> $repos */

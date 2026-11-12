@@ -11,7 +11,7 @@ return [
     |
     */
 
-    'github_user' => env('GITHUB_USER', 'jordanpartridge'),
+    'github_user' => env('GITHUB_USER', 'shadetheory'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,8 +67,8 @@ return [
         'conduit-ui/connector',
         'conduit-ui/pr',
         'conduit-ui/knowledge',
-        'jordanpartridge/agentctl',
-        'jordanpartridge/triage-agent',
+        'shadetheory/agentctl',
+        'shadetheory/triage-agent',
     ],
 
 ];
